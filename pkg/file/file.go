@@ -6,6 +6,8 @@ import (
 	"github.com/leftbin/go-util/pkg/shell"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
+	"io"
+	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -68,4 +70,24 @@ func WriteFile(content []byte, outputPath string) error {
 		return errors.Wrapf(err, "failed to write %s file", outputPath)
 	}
 	return nil
+}
+
+func Download(filepath string, url string) error {
+	// Get the data
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	// Create the file
+	out, err := os.Create(filepath)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	// Write the body to file
+	_, err = io.Copy(out, resp.Body)
+	return err
 }
