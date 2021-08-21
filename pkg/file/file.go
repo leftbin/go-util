@@ -11,6 +11,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"text/template"
 )
 
@@ -36,6 +37,17 @@ func IsDirExists(d string) bool {
 		return false
 	}
 	return info.IsDir()
+}
+
+func GetAbsPath(filePath string) (string, error) {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return "", errors.Wrap(err, "failed to get user home dir")
+	}
+	if strings.HasPrefix(filePath, "~/") {
+		filePath = filepath.Join(homeDir, filePath[2:])
+	}
+	return filePath, nil
 }
 
 // Unzip unzips file using shell command
