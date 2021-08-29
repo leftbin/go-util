@@ -1,6 +1,7 @@
 package shell
 
 import (
+	"io"
 	"os"
 	"os/exec"
 
@@ -10,6 +11,14 @@ import (
 func RunCmd(cmd *exec.Cmd) error {
 	log.Infof("\nrunning command %s\n\n", cmd.String())
 	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Stdin = os.Stdin
+	return cmd.Run()
+}
+
+func RunCmdWithStdOut(cmd *exec.Cmd, stdOut io.Writer) error {
+	log.Infof("\nrunning command %s\n\n", cmd.String())
+	cmd.Stdout = stdOut
 	cmd.Stderr = os.Stderr
 	cmd.Stdin = os.Stdin
 	return cmd.Run()
