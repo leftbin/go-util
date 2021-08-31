@@ -63,7 +63,7 @@ func Unzip(zipFile, dest string) error {
 }
 
 func RenderTmplt(input interface{}, tmpltString, outputPath string) ([]byte, error) {
-	log.Infof("rendering %s", outputPath)
+	log.Debugf("rendering %s", outputPath)
 	t := template.New("template").Funcs(template.FuncMap(sprig.FuncMap()))
 	t, _ = t.Parse(tmpltString)
 	var renderedBytes bytes.Buffer
