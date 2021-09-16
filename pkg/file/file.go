@@ -62,13 +62,16 @@ func Unzip(zipFile, dest string) error {
 	return nil
 }
 
-func RenderTmplt(input interface{}, tmpltString, outputPath string) ([]byte, error) {
-	log.Debugf("rendering %s", outputPath)
+func RenderTmplt(input interface{}, tmpltString string) ([]byte, error) {
+	log.Debugf("rendering template",)
 	t := template.New("template").Funcs(template.FuncMap(sprig.FuncMap()))
-	t, _ = t.Parse(tmpltString)
+	t, err := t.Parse(tmpltString)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to parse template")
+	}
 	var renderedBytes bytes.Buffer
 	if err := t.Execute(&renderedBytes, input); err != nil {
-		return nil, errors.Wrapf(err, "failed to render %s", outputPath)
+		return nil, errors.Wrapf(err, "failed to render template")
 	}
 	return renderedBytes.Bytes(), nil
 }
