@@ -2,10 +2,6 @@ package file
 
 import (
 	"bytes"
-	"github.com/Masterminds/sprig/v3"
-	"github.com/leftbin/go-util/pkg/shell"
-	"github.com/pkg/errors"
-	log "github.com/sirupsen/logrus"
 	"io"
 	"net/http"
 	"os"
@@ -13,6 +9,11 @@ import (
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	"github.com/Masterminds/sprig/v3"
+	"github.com/leftbin/go-util/pkg/shell"
+	"github.com/pkg/errors"
+	log "github.com/sirupsen/logrus"
 )
 
 // IsFileExists check if a file exists
@@ -63,7 +64,7 @@ func Unzip(zipFile, dest string) error {
 }
 
 func RenderTmplt(input interface{}, tmpltString string) ([]byte, error) {
-	log.Debugf("rendering template",)
+	log.Debugf("rendering template")
 	t := template.New("template").Funcs(template.FuncMap(sprig.FuncMap()))
 	t, err := t.Parse(tmpltString)
 	if err != nil {

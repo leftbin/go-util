@@ -1,8 +1,9 @@
 package table
 
 import (
-	"github.com/jedib0t/go-pretty/v6/table"
 	"os"
+
+	"github.com/jedib0t/go-pretty/v6/table"
 )
 
 func PrintTable(header table.Row, rows []table.Row) {
