@@ -63,10 +63,10 @@ func Unzip(zipFile, dest string) error {
 	return nil
 }
 
-func RenderTmplt(input interface{}, tmpltString string) ([]byte, error) {
+func RenderTemplate(input interface{}, templateString string) ([]byte, error) {
 	log.Debugf("rendering template")
 	t := template.New("template").Funcs(template.FuncMap(sprig.FuncMap()))
-	t, err := t.Parse(tmpltString)
+	t, err := t.Parse(templateString)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to parse template")
 	}
