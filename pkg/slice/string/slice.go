@@ -1,4 +1,4 @@
-package slice
+package string
 
 import "strings"
 
@@ -21,4 +21,13 @@ func ToMultiLineString(s []string) string {
 		b.WriteString("\n")
 	}
 	return b.String()
+}
+
+func Remove(s []string, r string) []string {
+	for i, v := range s {
+		if v == r {
+			return append(s[:i], s[i+1:]...)
+		}
+	}
+	return s
 }
