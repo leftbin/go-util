@@ -9,7 +9,7 @@ import (
 )
 
 func RunCmd(cmd *exec.Cmd) error {
-	log.Infof("running command %s", cmd.String())
+	log.Debugf("running command %s", cmd.String())
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	cmd.Stdin = os.Stdin
